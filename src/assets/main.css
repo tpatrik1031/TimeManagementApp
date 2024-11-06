@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply font-sans;
+}
+
+.btn-primary {
+    @apply bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full transition-transform transform hover:scale-105
+}
+
+.btn-view {
+    @apply text-white bg-[#3b5998] hover:bg-[#3b5998]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2
+}
+
+.btn-delete {
+    @apply bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-full
+}
+
+.task-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 items per row */
+    gap: 16px; /* Adjust as needed */
+}
+
+@media (max-width: 768px) {
+    .task-list {
+      grid-template-columns: 1fr; /* 1 item per row on mobile */
+    }
+}
