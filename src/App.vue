@@ -1,6 +1,6 @@
 <template>
   <MainLayout>
-    <main class="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-800 to-gray-900 text-white">
+    <main class="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-800 to-gray-900 text-white p-4">
       <ConfirmModal
         :show="showConfirmModal"
         @confirm="confirmDeleteAllTasks"
@@ -9,7 +9,7 @@
       <div v-if="showModal" class="absolute w-full h-full bg-black bg-opacity-50 z-20 flex items-center justify-center">
         <div class="w-11/12 md:w-2/3 lg:w-1/2 bg-gray-800 border border-gray-700 p-6 rounded-lg shadow-lg relative">
           <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-bold text-white">Töltse ki</h2>
+            <h2 class="text-xl font-bold text-white">Töltse ki!</h2>
             <button @click="closeModal" class="text-gray-400 hover:text-gray-200">
               <CloseIcon />
             </button>
@@ -23,7 +23,7 @@
         </div>
       </div>
       <div class="max-w-screen-lg w-full p-6 md:p-12 m-auto bg-gray-800 bg-opacity-90 rounded-lg shadow-lg text-center">
-        <header class="flex justify-between items-center mb-6">
+        <header class="flex flex-col gap-4 md:flex-row lg:flex-row justify-between items-center mb-6">
           <h1 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight">Vágjon bele!</h1>
           <button @click="openCreateModal" class="btn-primary">
             Létrehozás

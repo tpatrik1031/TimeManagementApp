@@ -1,6 +1,6 @@
 <template>
-    <div>
-      <div class="flex my-2">
+    <div class="p-4">
+      <div class="flex flex-col md:flex-row my-2 justify-center">
         <button class="btn-view" @click="currentView = 'daily'">
           Napi beosztás
         </button>
@@ -16,7 +16,7 @@
           v-if="currentView === 'daily'" 
           v-model="selectedDate" 
           placeholder="Válassza ki a napot" 
-          type="date" 
+          type="date"
         />
         <Datepicker 
           v-if="currentView === 'weekly'" 
@@ -32,7 +32,7 @@
         />
       </div>
       <div v-if="currentView === 'daily'">
-        <div class="flex justify-between my-4">
+        <div class="flex flex-col-reverse gap-2 md:flex-row lg:flex-row justify-between my-4">
           <h2 class="font-bold">Napi beosztás {{ selectedDate ? selectedDate.toLocaleDateString() : ' ' }}</h2>
           <button class="btn-delete" @click="deleteAllTasks('daily')">
             Összes törlése
@@ -49,7 +49,7 @@
         </ul>
       </div>
       <div v-if="currentView === 'weekly'">
-        <div class="flex justify-between my-4">
+        <div class="flex flex-col-reverse gap-2 md:flex-row lg:flex-row justify-between my-4">
           <h2 class="font-bold">Heti beosztás {{ selectedWeek ? selectedWeek.toLocaleDateString() : ' ' }}</h2>
           <button class="btn-delete" @click="deleteAllTasks('weekly')">
             Összes törlése
@@ -66,7 +66,7 @@
         </ul>
       </div>
       <div v-if="currentView === 'monthly'">
-        <div class="flex justify-between my-4">
+        <div class="flex flex-col-reverse gap-2 md:flex-row lg:flex-row justify-between my-4">
           <h2 class="font-bold">Havi beosztás {{ selectedMonth ? selectedMonth.toLocaleDateString() : ' ' }}</h2>
           <button class="btn-delete" @click="deleteAllTasks('monthly')">
             Összes törlése
