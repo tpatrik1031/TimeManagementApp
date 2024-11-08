@@ -2,9 +2,7 @@
   <form @submit.prevent="submitTask">
     <label for="date" class="block mb-2 font-medium text-white">Dátum:</label>
     <div class="flex my-2 gap-2 items-center">
-      <Datepicker id="startDate" v-model="startDate" type="datetime" placeholder="Válassza ki a kezdési dátumot" required />
-      -
-      <Datepicker id="endDate" v-model="endDate" type="datetime" placeholder="Válassza ki a befejezési dátumot" required />
+      <VueDatePicker id="date" type="datetime" placeholder="Válassza ki az időkeretet..." v-model="date" range required/>
     </div>
     <div class="flex-col items-center">
       <label for="tag" class="block mb-2 font-medium text-white">Címke:</label>
@@ -30,29 +28,28 @@
   
 <script setup>
   import { ref, watch } from 'vue';
-  import Datepicker from '@vuepic/vue-datepicker';
-  import '@vuepic/vue-datepicker/dist/main.css';
-  
+
   const props = defineProps({
     taskToEdit: Object,
   });
-  
+
   const emit = defineEmits(['add-task', 'edit-task', 'close-modal']);
-  
-  const startDate = ref(null);
-  const endDate = ref(null);
+
+  const date = ref([]);
   const taskDescription = ref('');
   const taskTag = ref('');
   const customTag = ref('');
   const isEditing = ref(false);
   const errorMessage = ref('');
-  
+
   watch(
     () => props.taskToEdit,
     (newTask) => {
       if (newTask) {
-        startDate.value = new Date(`${newTask.date} ${newTask.startTime}`);
-        endDate.value = new Date(`${newTask.date} ${newTask.endTime}`);
+        date.value = [
+          new Date(`${newTask.date} ${newTask.startTime}`),
+          new Date(`${newTask.date} ${newTask.endTime}`)
+        ];
         taskDescription.value = newTask.description;
         taskTag.value = newTask.tag || '';
         isEditing.value = true;
@@ -60,34 +57,33 @@
     },
     { immediate: true }
   );
-  
+
   const resetForm = () => {
-    startDate.value = null;
-    endDate.value = null;
+    date.value = [];
     taskDescription.value = '';
     taskTag.value = '';
     customTag.value = '';
     isEditing.value = false;
     errorMessage.value = '';
   };
-  
+
   const validateDates = () => {
-    if (startDate.value && endDate.value && endDate.value <= startDate.value) {
+    if (date.value.length === 2 && date.value[1] <= date.value[0]) {
       errorMessage.value = "Befejezési dátumnak a kezdési dátum után kell lennie.";
       return false;
     }
     errorMessage.value = '';
     return true;
   };
-  
+
   const submitTask = () => {
     if (!validateDates()) return;
-  
+
     const task = {
       id: isEditing.value ? props.taskToEdit.id : Date.now(),
-      date: startDate.value.toLocaleDateString(),
-      startTime: startDate.value.toLocaleTimeString(),
-      endTime: endDate.value.toLocaleTimeString(),
+      date: date.value[0].toLocaleDateString(),
+      startTime: date.value[0].toLocaleTimeString(),
+      endTime: date.value[1].toLocaleTimeString(),
       description: taskDescription.value,
       tag: taskTag.value === 'other' ? customTag.value : taskTag.value,
     };
